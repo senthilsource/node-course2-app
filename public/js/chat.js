@@ -16,7 +16,26 @@ function scrollToBottom(){
 }
 
 socket.on("connect", function(){
-    console.log("Connected to Server !!");
+    var params = $.deparam(window.location.search);
+
+    socket.emit("join", params, function(err){
+        if(err){
+            alert("Name and room is not correct");
+            window.location.href="/";
+        }else{
+            console.log("Joined");
+        }
+    });
+});
+
+socket.on("updateUsersList", (users)=>{
+    var ol = $("<ol></ol>");
+
+    users.forEach((user)=>{
+        ol.append($("<li></li>").text(user));       
+    });
+
+    $("#users").html(ol);
 });
 
 socket.on("disconnect", function(){
