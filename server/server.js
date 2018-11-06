@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
     });
 
 });
-
-server.listen(port, () => {
+var ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+server.listen(8080, ip, () => {
     console.log(`App running at port ${port}`);
 });
